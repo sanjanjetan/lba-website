@@ -9,7 +9,7 @@
 $PluginInfo['queue'] = array(
 	'Name' => 'Queue',
     'Description' => 'Queue by Jia for Leech BA ~ Runescape',
-    'Version' => '1.0.2',
+    'Version' => '1.0.8.4',
     //'RequiredApplications' => array('Vanilla' => '2.1'), //TODO update if necessary
     'License' => 'GNU GPL2',
     'SettingsUrl' => '/settings/queue',
@@ -38,8 +38,9 @@ class QueuePlugin extends Gdn_Plugin {
      */
 	public function PluginController_queue_Create($Sender) {
 		$Session = Gdn::Session();
-		//clear css files, must to get rid of vanilla
-		if (CheckPermission('Plugins.Queue.View')) {
+		//check the url
+		
+		if (CheckPermission('Plugins.Queue.View')) {//sanity check
 			/**
 			 * Following 3 lines (case sensitive) makes the template for the website use the theme template
 			 */
@@ -50,11 +51,18 @@ class QueuePlugin extends Gdn_Plugin {
 			/**
 			 * Additional imports
 			 */
-			$Sender->addJsFile('jQuery.dataTables.min.js', 'plugins/queue');
-			$Sender->addCssFile('dataTables.min.css', 'plugins/queue');
+			//$Sender->addJsFile('jQuery.dataTables.min.js', 'plugins/queue');
+			//$Sender->addCssFile('dataTables.min.css', 'plugins/queue');
+			$Sender->addJsFile("https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js");
+			$Sender->addJsFile("https://cdn.datatables.net/rowreorder/1.2.0/js/dataTables.rowReorder.min.js");
+			$Sender->addJsFile("https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js");
+			$Sender->Head->addCss("https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css");
+			$Sender->Head->addCss("https://cdn.datatables.net/rowreorder/1.2.0/css/rowReorder.dataTables.min.css");
+			$Sender->Head->addCss("https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css");
+			
 			//my stylings
-			$Sender->addJsFile('scripts.js', 'plugins/queue');
-			$Sender->addCssFile('style.css', 'plugins/queue');
+			$Sender->addJsFile('scripts-0.1.1.js', 'plugins/queue');
+			$Sender->addCssFile('queue-0.1.1.css', 'plugins/queue');
 			
 			
 			//render relevant page, also works: $Sender->Render('queue', '', 'plugins/queue');
