@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2014 by original authors @ fontello.com</metadata>
+<defs>
+<font id="steamicons" horiz-adv-x="1000" >
+<font-face font-family="steamicons" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="chat" unicode="&#xe800;" d="m0 480q0 107 68 199t186 145 255 53q104 0 198-32t162-84 108-127 41-155q0-64-26-125t-73-110-109-85-140-57-161-20q-103 0-194 30l-116-81q-65-42-91-25t-11 97l23 121q-57 53-88 119t-32 136z m650-468q118 23 215 82t158 145 75 186q89-35 142-102t54-147q0-49-22-96t-62-83l17-86q10-55-8-67t-64 17l-82 57q-63-21-136-21-87 0-163 31t-124 84z" horiz-adv-x="1294.4" />
+<glyph glyph-name="flash" unicode="&#xe801;" d="m598 349q23-12 26-39t-16-45l-391-370q-14-14-35-14-28 0-43 24t-6 49l113 270-220 128q-22 12-25 38t15 45l391 370q11 14 35 14 21 0 37-16t15-36q0-13-5-23l-111-267z" horiz-adv-x="624" />
+<glyph glyph-name="mail" unicode="&#xe802;" d="m0 28v644q0 8 2 18l460-460q39-39 95-39 55 0 94 39l460 460q2-9 2-18v-644q0-37-26-62t-62-26h-937q-36 0-62 26t-26 62z m63 728q13 4 25 4h937q12 0 25-4l-463-463q-13-12-31-12t-30 12z" horiz-adv-x="1113.3" />
+<glyph glyph-name="star" unicode="&#xe803;" d="m741-118q-19 0-39 12l-213 121-215-121q-44-24-84 3-41 29-31 79l50 243q-10 9-39 35t-45 40l-99 90q-37 35-21 82t66 54l244 26 102 225q22 47 72 47 47 0 71-47l101-225 245-27q48-4 65-52t-21-83l-183-166 50-242q7-35-16-64t-60-29z m-425 343q-1-4-7-36t-17-84-20-92l190 107q27 14 52 0l190-107-44 213q-6 29 16 49l161 148-217 23q-30 4-41 30l-90 199-90-199q-13-26-43-30l-216-23 161-148q21-19 15-50z" horiz-adv-x="976" />
+<glyph glyph-name="wrench" unicode="&#xe804;" d="m804 597q30-9 30-90 0-108-77-184t-184-76q-28 0-53 5-31-39-90-117t-109-136q-55-65-138-65-75 0-129 53t-54 128q0 84 64 140 59 50 137 108t118 91q-6 31-6 53 0 107 76 183t184 77q38 0 77-13 14-4 18-18t-7-26l-138-135 20-99 100-20 136 133q11 11 25 8z m-621-533q21 0 36 15t16 36-16 37-36 16-37-16-16-37 16-36 37-15z" horiz-adv-x="834" />
+</font>
+</defs>
+</svg>
