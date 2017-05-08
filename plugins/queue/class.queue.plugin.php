@@ -50,14 +50,17 @@ class QueuePlugin extends Gdn_Plugin {
 		/**
 		 * Additional imports
 		 */
-		//$Sender->addJsFile('jQuery.dataTables.min.js', 'plugins/queue');
-		//$Sender->addCssFile('dataTables.min.css', 'plugins/queue');
+		//datatables
 		$Sender->addJsFile("https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js");
 		$Sender->addJsFile("https://cdn.datatables.net/rowreorder/1.2.0/js/dataTables.rowReorder.min.js");
 		$Sender->addJsFile("https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js");
 		$Sender->Head->addCss("https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css");
 		$Sender->Head->addCss("https://cdn.datatables.net/rowreorder/1.2.0/css/rowReorder.dataTables.min.css");
 		$Sender->Head->addCss("https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css");
+		
+		//bootstrap
+		$Sender->Head->addCss("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css");
+		$Sender->addJsFile("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js");
 		
 		//my stylings
 		$Sender->addJsFile('scripts-0.1.3.js', 'plugins/queue');
@@ -73,6 +76,7 @@ class QueuePlugin extends Gdn_Plugin {
 		
 		if (CheckPermission('Plugins.Queue.View')) {//sanity check
 			//render relevant page, also works: $Sender->Render('queue', '', 'plugins/queue');
+			$Sender->addLeech = new Gdn_Form();
 			$Sender->Render($this->GetView('queue.php'));
 			
 			//TODO create a better view of no access
@@ -82,15 +86,22 @@ class QueuePlugin extends Gdn_Plugin {
 		//$Sender->Form = new Gdn_Form();
 		$view = 'test.php';
 		$Session = Gdn::Session();
-		if ($Sender->Form->authenticatedPostBack()) {
-			$post = $Sender->Form->formValues();
+		$Sender->Render($this->GetView($view));
+	}
+	public function Controller_process($Sender){
+		if ($Sender->addLeech->authenticatedPostBack()) {
+			$post = $Sender->addLeech->formValues();
 			if (isset($post['Cancel'])) {
-				$view = 'canceled.php';
+				//$view = 'queue.php';
+				Redirect('queue');
 			} else {
 				//validate
+				//put the values back into a temp form
+				$sender->temp->setData($post);
+				$validation = new Gdn_Validation();
 			}
 		}
-		$Sender->Render($this->GetView($view));
+		//$Sender->Render($this->GetView($view));
 	}
     /**
      * Settings interface

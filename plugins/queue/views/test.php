@@ -4,7 +4,7 @@
 test
 <?php
 	// This "starts" our form.
-	echo $this->Form->Open();
+	echo $this->Form->Open(array('action'=>Url('queue/process',true)));
 	// Show errors here, at the top of the form.
 	echo $this->Form->Errors();
 	echo $this->Form->Label('RSN', 'test');

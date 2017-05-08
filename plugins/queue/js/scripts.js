@@ -15,7 +15,7 @@ $(document).ready(function(){
 		],
 		"columnDefs": [
 			{"className": "dt-center", "targets": [2,5]},
-			{ type: "html", targets: 4 }
+			{ "orderable": false, "targets": [6,7] }
 		],
 		responsive: true
 	});
