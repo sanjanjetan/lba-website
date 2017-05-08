@@ -1,0 +1,32 @@
+.Alt {
+    background-color:#ddd;
+
+    }
+ 
+td {
+    padding: 4px;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+th  {
+    padding:4px;
+    border: 1px solid #000;
+    color: black;
+    font-size: 110%;
+    }
+    
+ table {
+    border:1px solid #000;
+    }   
+#Panel{
+    display:none;
+}
+#Content {
+    width: 100%;
+    float: none;
+    margin-right: 0;
+    margin-left: 5px;
+}
