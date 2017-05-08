@@ -1,6 +1,6 @@
 <?php
 /**
- * Queue by Jia
+ * Queue
  *
  * @copyright 2008-2014 Vanilla Forums, Inc.
  * @license GNU GPLv2
@@ -10,11 +10,10 @@ $PluginInfo['queue'] = array(
 	'Name' => 'Queue',
     'Description' => 'Queue by Jia for Leech BA ~ Runescape',
     'Version' => '1.0.2',
-    //'RequiredApplications' => array('Vanilla' => '2.1'),
+    //'RequiredApplications' => array('Vanilla' => '2.1'), //TODO update if necessary
     'License' => 'GNU GPL2',
     'SettingsUrl' => '/settings/queue',
 	//view queue, confirm to be added to queue, edit/delete entries in queue
-    //'SettingsPermission' => array('Queue.View' => 'Garden.Settings.Manage', 'Queue.Confirm' => 'Garden.Settings.Manage', 'Queue.Edit' => 'Garden.Settings.Manage'),
 	'RegisterPermissions' => array('Plugins.Queue.View','Plugins.Queue.ClanView','Plugins.Queue.Confirm','Plugins.Queue.Edit'),
 	'MobileFriendly' => true,
 	'Author' => 'Jia'
@@ -22,23 +21,18 @@ $PluginInfo['queue'] = array(
 
 /**
  * Class QueuePlugin
- *
  */
 class QueuePlugin extends Gdn_Plugin {
     /**
      * Plugin constructor
-     *
-     * This fires once per page load, during execution of bootstrap.php. It is a decent place to perform
-     * one-time-per-page setup of the plugin object. Be careful not to put anything too strenuous in here
-     * as it runs every page load and could slow down your forum.
+     * This fires once per page load, during execution of bootstrap.php.
      */
     public function __construct() {
     }
 
     /**
-     * Queue controller
-     *
-     * When a request is made towards this plugin, make the appropriate action
+     * Queue controller - user view.
+     * When a request is made towards this plugin, make the appropriate action (should display the relevant view)
      *
      * @param $Sender Sending controller instance
      */
@@ -56,12 +50,17 @@ class QueuePlugin extends Gdn_Plugin {
 			/**
 			 * Additional imports
 			 */
-			$Sender->AddJsFile('jQuery.dataTables.min.js', 'plugins/queue');
+			$Sender->addJsFile('jQuery.dataTables.min.js', 'plugins/queue');
 			$Sender->addCssFile('dataTables.min.css', 'plugins/queue');
+			//my stylings
+			$Sender->addJsFile('scripts.js', 'plugins/queue');
+			$Sender->addCssFile('style.css', 'plugins/queue');
 			
 			
 			//render relevant page, also works: $Sender->Render('queue', '', 'plugins/queue');
 			$Sender->Render($this->GetView('queue.php'));
+			
+			//TODO create a better view of no access
 		}else echo Wrap(Anchor(Img('/plugins/MembersListEnh/design/AccessDenied.png',array('width'=>'100%'), array('title' => T('You Have No Permission To View This Page Go Back'))), '/discussions',array('target' => '_self')), 'h1');
     }
 
@@ -136,7 +135,7 @@ class QueuePlugin extends Gdn_Plugin {
     }
 
     /**
-     * Sets up plugin. Run during enabling
+     * Sets up plugin. Runs during enabling
      */
     public function setup() {
 

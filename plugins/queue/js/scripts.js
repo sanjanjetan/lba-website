@@ -1,3 +1,3 @@
-$(function(){
-    /* Do some javascripts on page load! */
+$(document).ready(function(){
+	$('#queue').DataTable();
 });
