@@ -9,7 +9,7 @@
 $PluginInfo['queue'] = array(
 	'Name' => 'Queue',
     'Description' => 'Queue by Jia for Leech BA ~ Runescape',
-    'Version' => '1.0.8.4',
+    'Version' => '1.0.9',
     //'RequiredApplications' => array('Vanilla' => '2.1'), //TODO update if necessary
     'License' => 'GNU GPL2',
     'SettingsUrl' => '/settings/queue',
@@ -36,42 +36,62 @@ class QueuePlugin extends Gdn_Plugin {
      *
      * @param $Sender Sending controller instance
      */
-	public function PluginController_queue_Create($Sender) {
+	public function pluginController_queue_Create($Sender) {
+		$Sender->Form = new Gdn_Form();
+		/**
+		 * Following 3 lines (case sensitive) makes the template for the website use the theme template
+		 */
+		$Sender->clearCssFiles();
+		$Sender->addCssFile('style.css');
+		$Sender->MasterView = 'default';
+		
+		//sets breadcrumb to current lcoation
+		$Sender->SetData('Breadcrumbs', array(array('Name' => $title, 'Url' => 'queue')));
+		/**
+		 * Additional imports
+		 */
+		//$Sender->addJsFile('jQuery.dataTables.min.js', 'plugins/queue');
+		//$Sender->addCssFile('dataTables.min.css', 'plugins/queue');
+		$Sender->addJsFile("https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js");
+		$Sender->addJsFile("https://cdn.datatables.net/rowreorder/1.2.0/js/dataTables.rowReorder.min.js");
+		$Sender->addJsFile("https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js");
+		$Sender->Head->addCss("https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css");
+		$Sender->Head->addCss("https://cdn.datatables.net/rowreorder/1.2.0/css/rowReorder.dataTables.min.css");
+		$Sender->Head->addCss("https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css");
+		
+		//my stylings
+		$Sender->addJsFile('scripts-0.1.3.js', 'plugins/queue');
+		$Sender->addCssFile('queue-0.1.1.css', 'plugins/queue');
+		
+		$this->dispatch($Sender, $Sender->RequestArgs);
+    }
+	
+	//on /queue landing
+	public function Controller_index($Sender){
 		$Session = Gdn::Session();
 		//check the url
 		
 		if (CheckPermission('Plugins.Queue.View')) {//sanity check
-			/**
-			 * Following 3 lines (case sensitive) makes the template for the website use the theme template
-			 */
-			$Sender->clearCssFiles();
-			$Sender->addCssFile('style.css');
-			$Sender->MasterView = 'default';
-			
-			/**
-			 * Additional imports
-			 */
-			//$Sender->addJsFile('jQuery.dataTables.min.js', 'plugins/queue');
-			//$Sender->addCssFile('dataTables.min.css', 'plugins/queue');
-			$Sender->addJsFile("https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js");
-			$Sender->addJsFile("https://cdn.datatables.net/rowreorder/1.2.0/js/dataTables.rowReorder.min.js");
-			$Sender->addJsFile("https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js");
-			$Sender->Head->addCss("https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css");
-			$Sender->Head->addCss("https://cdn.datatables.net/rowreorder/1.2.0/css/rowReorder.dataTables.min.css");
-			$Sender->Head->addCss("https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css");
-			
-			//my stylings
-			$Sender->addJsFile('scripts-0.1.1.js', 'plugins/queue');
-			$Sender->addCssFile('queue-0.1.1.css', 'plugins/queue');
-			
-			
 			//render relevant page, also works: $Sender->Render('queue', '', 'plugins/queue');
 			$Sender->Render($this->GetView('queue.php'));
 			
 			//TODO create a better view of no access
 		}else echo Wrap(Anchor(Img('/plugins/MembersListEnh/design/AccessDenied.png',array('width'=>'100%'), array('title' => T('You Have No Permission To View This Page Go Back'))), '/discussions',array('target' => '_self')), 'h1');
-    }
-
+	}
+	public function Controller_test($Sender){
+		//$Sender->Form = new Gdn_Form();
+		$view = 'test.php';
+		$Session = Gdn::Session();
+		if ($Sender->Form->authenticatedPostBack()) {
+			$post = $Sender->Form->formValues();
+			if (isset($post['Cancel'])) {
+				$view = 'canceled.php';
+			} else {
+				//validate
+			}
+		}
+		$Sender->Render($this->GetView($view));
+	}
     /**
      * Settings interface
      *
@@ -156,7 +176,7 @@ class QueuePlugin extends Gdn_Plugin {
 		
 		// add routing to routes
 		$matchroute = '^queue(/.*)?$';
-		$target = 'plugin/Queue$1';
+		$target = 'plugin/queue$1';
 		
 		if(!Gdn::Router()->MatchRoute($matchroute))
 			Gdn::Router()->SetRoute($matchroute,$target,'Internal');
@@ -183,9 +203,10 @@ class QueuePlugin extends Gdn_Plugin {
         $St=Gdn::Structure();
 		$St->table('Queue')
 			->primaryKey('ID')
-			->column('customerID', 'INT',FALSE,'UNIQUE')
             ->column('Rsn', 'varchar(20)',FALSE)
             ->column('Unlock', 'TINYINT',FALSE)
+			->column('Queen', 'TINYINT',FALSE)
+			->column('King', 'TINYINT',FALSE)
 			->column('Ironman', 'TINYINT','0')
 			->column('Notes', 'varchar(255)',TRUE)
             ->column('DateInserted', 'datetime',null)
@@ -214,8 +235,10 @@ class QueuePlugin extends Gdn_Plugin {
 		$St=Gdn::Structure();
 		$St->table('QueueMisc')
 		->column('QueueID','INT',FALSE,'KEY')
-		->column('Skill','TINYINT',FALSE)
-		->column('Amount','INT',FALSE)
+		->column('att','SMALLINT',FALSE)
+		->column('def','SMALLINT',FALSE)
+		->column('heal','SMALLINT',FALSE)
+		->column('col','SMALLINT',FALSE)
 		->set();
 
 		

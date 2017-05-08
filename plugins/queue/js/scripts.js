@@ -4,7 +4,8 @@ $(document).ready(function(){
 			selector: 'td:nth-child(2)'
 		},
 		"columns": [
-			{ "width": "50px" },
+			null,
+			{ "width": "20px" },
 			null,
 			null,
 			null,
@@ -13,7 +14,8 @@ $(document).ready(function(){
 			null
 		],
 		"columnDefs": [
-			{"className": "dt-center", "targets": [1,4]}
+			{"className": "dt-center", "targets": [2,5]},
+			{ type: "html", targets: 4 }
 		],
 		responsive: true
 	});
