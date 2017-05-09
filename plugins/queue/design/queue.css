@@ -1,0 +1,17 @@
+div.queue{
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+}
+
+div.queue-options{
+	
+}
+
+/* pretty icons */
+.glyphicon{
+
+}
+.glyphicon-remove{
+	content:"\e014";
+}
